@@ -98,7 +98,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   //private CameraManager cameraManager;
   private CaptureActivityHandler handler;
   private Result savedResultToShow;
-  //private ViewfinderView viewfinderView;
+  private ViewfinderView viewfinderView;
   private TextView statusView;
   private View resultView;
   private Result lastResult;
@@ -154,8 +154,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // update mediator with this object
     Mediator.getInstance().setCameraManager(new CameraManager(getApplication()));
 
-    //viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-    Mediator.getInstance().setViewfinderView((ViewfinderView) findViewById(R.id.viewfinder_view));
+    viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator
 
     resultView = findViewById(R.id.result_view);
@@ -520,7 +519,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     statusView.setVisibility(View.GONE);
-    Mediator.getInstance().getViewfinderView().setVisibility(View.GONE);
+    viewfinderView.setVisibility(View.GONE);
     resultView.setVisibility(View.VISIBLE);
 
     ImageView barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
@@ -598,7 +597,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private void handleDecodeExternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
 
     if (barcode != null) {
-    	Mediator.getInstance().getViewfinderView().drawResultBitmap(barcode);
+    	viewfinderView.drawResultBitmap(barcode);
     }
 
     long resultDurationMS;
@@ -702,7 +701,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       // Creating the handler starts the preview, which can also throw a RuntimeException.
       if (handler == null) {
         handler = new CaptureActivityHandler(decodeFormats, decodeHints, characterSet, 
-                new ViewfinderResultPointCallback(Mediator.getInstance().getViewfinderView()));// no longer needed, cameraManager);
+                new ViewfinderResultPointCallback(viewfinderView));// no longer needed, cameraManager);
       }
       decodeOrStoreSavedBitmap(null, null);
     } catch (IOException ioe) {
@@ -736,11 +735,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     resultView.setVisibility(View.GONE);
     statusView.setText(R.string.msg_default_status);
     statusView.setVisibility(View.VISIBLE);
-    Mediator.getInstance().getViewfinderView().setVisibility(View.VISIBLE);
+    viewfinderView.setVisibility(View.VISIBLE);
     lastResult = null;
   }
 
   public void drawViewfinder() {
-	  Mediator.getInstance().getViewfinderView().drawViewfinder();
+	  viewfinderView.drawViewfinder();
   }
 }

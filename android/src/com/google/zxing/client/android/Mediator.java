@@ -19,11 +19,6 @@ public class Mediator {
 	private static Mediator mInstance;
 
 	/**
-	 * the viewfinderView object responsible for drawing the resultpoints
-	 */
-	private ViewfinderView mViewfinderView;
-
-	/**
 	 * a camera manager that keeps track of camera state, resolution, ...
 	 */
 	private CameraManager mCameraManager;
@@ -50,23 +45,7 @@ public class Mediator {
 			mInstance = new Mediator();
 		return mInstance;
 	}
-
-	/**
-	 * 
-	 * @param viewfinderView
-	 */
-	public void setViewfinderView(ViewfinderView viewfinderView) {
-		mViewfinderView = viewfinderView;
-	}
-
-	/**
-	 * 
-	 * @return viewfinderView
-	 */
-	public ViewfinderView getViewfinderView() {
-		return mViewfinderView;
-	}
-
+	
 	/**
 	 * 
 	 * @param cameraManager
