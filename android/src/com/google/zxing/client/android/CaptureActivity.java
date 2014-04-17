@@ -701,7 +701,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     	Mediator.getInstance().getCameraManager().openDriver(surfaceHolder);
       // Creating the handler starts the preview, which can also throw a RuntimeException.
       if (handler == null) {
-        handler = new CaptureActivityHandler(decodeFormats, decodeHints, characterSet);// no longer needed, cameraManager);
+        handler = new CaptureActivityHandler(decodeFormats, decodeHints, characterSet, 
+                new ViewfinderResultPointCallback(Mediator.getInstance().getViewfinderView()));// no longer needed, cameraManager);
       }
       decodeOrStoreSavedBitmap(null, null);
     } catch (IOException ioe) {

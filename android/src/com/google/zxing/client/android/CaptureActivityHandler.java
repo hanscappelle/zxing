@@ -21,9 +21,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.BitmapFactory;
 import android.provider.Browser;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
+import com.google.zxing.ResultPointCallback;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -61,9 +63,8 @@ public final class CaptureActivityHandler extends Handler {
 
   CaptureActivityHandler(Collection<BarcodeFormat> decodeFormats,
                          Map<DecodeHintType,?> baseHints,
-                         String characterSet){
-    decodeThread = new DecodeThread(decodeFormats, baseHints, characterSet,
-        new ViewfinderResultPointCallback(Mediator.getInstance().getViewfinderView()));
+                         String characterSet, ResultPointCallback resultPointCallback){
+    decodeThread = new DecodeThread(decodeFormats, baseHints, characterSet, resultPointCallback);
     decodeThread.start();
     state = State.SUCCESS;
 
