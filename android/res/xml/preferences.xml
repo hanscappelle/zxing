@@ -41,12 +41,6 @@
         android:defaultValue="false"
         android:title="@string/preferences_decode_PDF417_title"/>
   </PreferenceCategory>
-  <PreferenceCategory android:title="@string/preferences_actions_title">
-    <CheckBoxPreference
-        android:key="preferences_auto_open_web"
-        android:defaultValue="false"
-        android:title="@string/preferences_auto_open_web_title"/>
-  </PreferenceCategory>
   <PreferenceCategory android:title="@string/preferences_general_title">
     <ListPreference
         android:entries="@array/preferences_front_light_options"
