@@ -51,9 +51,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -358,9 +356,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     //TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
     //typeTextView.setText(resultHandler.getType().toString());
 
-    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    TextView timeTextView = (TextView) findViewById(R.id.time_text_view);
-    timeTextView.setText(formatter.format(new Date(rawResult.getTimestamp())));
+    // in case you need the timestamp from the scan, kind of useless in livescan mode
+    //new Date(rawResult.getTimestamp())));
 
     // Map<ResultMetadataType,Object> metadata = rawResult.getResultMetadata();
     // here you could handle the metadata
