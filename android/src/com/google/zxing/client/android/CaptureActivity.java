@@ -54,7 +54,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -74,10 +73,6 @@ import java.util.Map;
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
-
-  private static final long BULK_MODE_SCAN_DELAY_MS = 1000L;
-
-  public static final int HISTORY_REQUEST_CODE = 0x0000bacc;
 
   private static final Collection<ResultMetadataType> DISPLAYABLE_METADATA_TYPES =
       EnumSet.of(ResultMetadataType.ISSUE_NUMBER,
@@ -310,17 +305,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       // Then not from history, so beep/vibrate and we have an image to draw on
       drawResultPoints(barcode, scaleFactor, rawResult);
     }
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (fromLiveScan && prefs.getBoolean(PreferencesActivity.KEY_BULK_MODE, false)) {
-          Toast.makeText(getApplicationContext(),
-                         getResources().getString(R.string.msg_bulk_mode_scanned) + " (" + rawResult.getText() + ')',
-                         Toast.LENGTH_SHORT).show();
-          // Wait a moment or else it will scan the same barcode continuously about 3 times
-          restartPreviewAfterDelay(BULK_MODE_SCAN_DELAY_MS);
-        } else {
-          handleDecodeInternally(rawResult, resultHandler, barcode);
-        }
+    handleDecodeInternally(rawResult, resultHandler, barcode);
   }
 
   /**
