@@ -61,9 +61,9 @@ public final class CameraManager {
    */
   private final PreviewCallback previewCallback;
   
-  public CameraManager(Context context, Display display) {
+  public CameraManager(Context context) {
     this.context = context;
-    this.configManager = new CameraConfigurationManager(context, display);
+    this.configManager = new CameraConfigurationManager(context);
     previewCallback = new PreviewCallback(configManager);
   }
 
@@ -210,7 +210,7 @@ public final class CameraManager {
       if (camera == null) {
         return null;
       }
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = configManager.getViewResolution();
       if (screenResolution == null) {
         // Called early, before init even finished
         return null;
@@ -252,7 +252,7 @@ public final class CameraManager {
       }
       Rect rect = new Rect(framingRect);
       Point cameraResolution = configManager.getCameraResolution();
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = configManager.getViewResolution();
       if (cameraResolution == null || screenResolution == null) {
         // Called early, before init even finished
         return null;
@@ -275,7 +275,7 @@ public final class CameraManager {
    */
   public synchronized void setManualFramingRect(int width, int height) {
     if (initialized) {
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = configManager.getViewResolution();
       if (width > screenResolution.x) {
         width = screenResolution.x;
       }

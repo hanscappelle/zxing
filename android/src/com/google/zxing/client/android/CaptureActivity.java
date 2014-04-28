@@ -111,7 +111,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // off screen.
     //cameraManager = ;
     // update mediator with this object
-    Mediator.getInstance().setCameraManager(new CameraManager(getApplication(), getWindowManager().getDefaultDisplay()));
+    Mediator.getInstance().setCameraManager(new CameraManager(getApplication()));
 
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator

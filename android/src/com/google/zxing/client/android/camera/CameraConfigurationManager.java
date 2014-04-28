@@ -22,7 +22,6 @@ import android.graphics.Point;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
@@ -54,14 +53,11 @@ final class CameraConfigurationManager {
   private static final int MIN_FPS = 5;
 
   private final Context context;
-  private Point screenResolution;
+  private Point viewResolution;
   private Point cameraResolution;
   
-  private Display mDisplay;
-
-  CameraConfigurationManager(Context context, Display display) {
+  CameraConfigurationManager(Context context) {
     this.context = context;
-    mDisplay = display;
   }
 
   /**
@@ -69,14 +65,16 @@ final class CameraConfigurationManager {
    */
   void initFromCameraParameters(Camera camera) {
     Camera.Parameters parameters = camera.getParameters();
-    WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-    Display display = manager.getDefaultDisplay();
-    Point theScreenResolution = new Point();
-    display.getSize(theScreenResolution);
-    screenResolution = theScreenResolution;
-    Log.i(TAG, "Screen resolution: " + screenResolution);
-    cameraResolution = findBestPreviewSizeValue(parameters, screenResolution);
-    Log.i(TAG, "Camera resolution: " + cameraResolution);
+    //WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    //Display display = manager.getDefaultDisplay();
+    //Point theScreenResolution = new Point();
+    //display.getSize(theScreenResolution);
+    //screenResolution = theScreenResolution;
+    // FIXME use camera resolution instead here
+    //Log.i(TAG, "Screen resolution: " + screenResolution);
+    
+    //cameraResolution = findBestPreviewSizeValue(parameters, null);
+    //Log.i(TAG, "Camera resolution: " + cameraResolution);
   }
 
   void setDesiredCameraParameters(Camera camera, boolean safeMode) {
@@ -153,8 +151,8 @@ final class CameraConfigurationManager {
     }
     
     // set rotation
-    if( mDisplay != null ){
-    	int rotation = mDisplay.getRotation();
+    	WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    	int rotation = manager.getDefaultDisplay().getRotation();
     	int angle = 0;
     	switch (rotation) {
 	        case Surface.ROTATION_0: // This is display orientation
@@ -175,7 +173,6 @@ final class CameraConfigurationManager {
     	}
     	//parameters.setRotation(angle);
     	camera.setDisplayOrientation(angle);
-    }
 
     parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
     camera.setParameters(parameters);
@@ -194,8 +191,8 @@ final class CameraConfigurationManager {
     return cameraResolution;
   }
 
-  Point getScreenResolution() {
-    return screenResolution;
+  Point getViewResolution() {
+    return viewResolution;
   }
 
   boolean getTorchState(Camera camera) {
