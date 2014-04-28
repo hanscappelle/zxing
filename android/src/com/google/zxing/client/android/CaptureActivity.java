@@ -22,8 +22,6 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.result.ResultHandler;
-import com.google.zxing.client.android.result.ResultHandlerFactory;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -290,14 +288,13 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
     inactivityTimer.onActivity();
     lastResult = rawResult;
-    ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
 
     boolean fromLiveScan = barcode != null;
     if (fromLiveScan) {
       // Then not from history, so beep/vibrate and we have an image to draw on
       drawResultPoints(barcode, scaleFactor, rawResult);
     }
-    handleDecodeInternally(rawResult, resultHandler, barcode);
+    handleDecodeInternally(rawResult, barcode);
   }
 
   /**
@@ -344,16 +341,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   }
 
   // Put up our own UI for how to handle the decoded contents.
-  private void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
+  private void handleDecodeInternally(Result rawResult, Bitmap barcode) {
 
-    CharSequence displayContents = resultHandler.getDisplayContents();
+    CharSequence displayContents = rawResult.getText();
 
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-    if (resultHandler.getDefaultButtonID() != null && prefs.getBoolean(PreferencesActivity.KEY_AUTO_OPEN_WEB, false)) {
-      resultHandler.handleButtonPress(resultHandler.getDefaultButtonID());
-      return;
-    }
+    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
     statusView.setVisibility(View.GONE);
     viewfinderView.setVisibility(View.GONE);
@@ -370,8 +362,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView formatTextView = (TextView) findViewById(R.id.format_text_view);
     formatTextView.setText(rawResult.getBarcodeFormat().toString());
 
-    TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
-    typeTextView.setText(resultHandler.getType().toString());
+    //TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
+    //typeTextView.setText(resultHandler.getType().toString());
 
     DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     TextView timeTextView = (TextView) findViewById(R.id.time_text_view);
