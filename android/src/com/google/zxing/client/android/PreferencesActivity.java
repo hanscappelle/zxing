@@ -34,8 +34,6 @@ public final class PreferencesActivity extends Activity {
   public static final String KEY_DECODE_AZTEC = "preferences_decode_Aztec";
   public static final String KEY_DECODE_PDF417 = "preferences_decode_PDF417";
 
-  public static final String KEY_CUSTOM_PRODUCT_SEARCH = "preferences_custom_product_search";
-
   public static final String KEY_FRONT_LIGHT_MODE = "preferences_front_light_mode";
   public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";
   public static final String KEY_INVERT_SCAN = "preferences_invert_scan";  
@@ -51,13 +49,5 @@ public final class PreferencesActivity extends Activity {
     super.onCreate(icicle);
     getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFragment()).commit();
   }
-
-  // Apparently this will be necessary when targeting API 19+:
-  /*
-  @Override
-  protected boolean isValidFragment(String fragmentName) {
-    return true;
-  }
-   */
 
 }
