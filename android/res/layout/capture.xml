@@ -14,13 +14,29 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+       
+  	<!-- now take this is one step further by changing the view
+  	we now use a relative layout, less nested views and some info
+  	text and a limited viewport -->
+    <TextView
+        android:id="@+id/text_info"
+       	android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	android:layout_alignParentTop="true"
+       	android:text="@string/info_text"
+       	/>
 
   <SurfaceView android:id="@+id/preview_view"
                android:layout_width="fill_parent"
-               android:layout_height="fill_parent"/>
+               android:layout_height="fill_parent"
+               android:layout_below="@id/text_info"/>
 
+  
   <com.google.zxing.client.android.ViewfinderView
       android:id="@+id/viewfinder_view"
       android:layout_width="fill_parent"
@@ -113,7 +129,6 @@
 
     </LinearLayout>
 
-
   </LinearLayout>
 
-</merge>
+</RelativeLayout>
