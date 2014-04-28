@@ -97,7 +97,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private View resultView;
   private Result lastResult;
   private boolean hasSurface;
-  private boolean copyToClipboard;
   private IntentSource source;
   private String sourceUrl;
   private ScanFromWebPageManager scanFromWebPageManager;
