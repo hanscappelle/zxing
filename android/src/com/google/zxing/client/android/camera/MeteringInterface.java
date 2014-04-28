@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.zxing.client.android.camera.metering;
+package com.google.zxing.client.android.camera;
 
 import java.util.Collections;
 import java.util.List;

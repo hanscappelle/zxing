@@ -26,7 +26,6 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.google.zxing.client.android.PreferencesActivity;
-import com.google.zxing.client.android.camera.metering.MeteringInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
