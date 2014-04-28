@@ -16,25 +16,17 @@
 
 package com.google.zxing.client.android;
 
-import android.content.ActivityNotFoundException;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.BitmapFactory;
-import android.provider.Browser;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPointCallback;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.util.Collection;
 import java.util.Map;
@@ -46,7 +38,7 @@ import java.util.Map;
  */
 public final class CaptureActivityHandler extends Handler {
 
-  private static final String TAG = CaptureActivityHandler.class.getSimpleName();
+  //private static final String TAG = CaptureActivityHandler.class.getSimpleName();
 
   // moved to mediator 
   //private final CaptureActivity activity;
@@ -99,38 +91,6 @@ public final class CaptureActivityHandler extends Handler {
         // We're decoding as fast as possible, so when one decode fails, start another.
         state = State.PREVIEW;
         Mediator.getInstance().getCameraManager().requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
-        break;
-      case R.id.return_scan_result:
-    	Mediator.getInstance().getCaptureActivity().setResult(Activity.RESULT_OK, (Intent) message.obj);
-    	Mediator.getInstance().getCaptureActivity().finish();
-        break;
-      case R.id.launch_product_query:
-        String url = (String) message.obj;
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        intent.setData(Uri.parse(url));
-
-        ResolveInfo resolveInfo =
-        		Mediator.getInstance().getCaptureActivity().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        String browserPackageName = null;
-        if (resolveInfo != null && resolveInfo.activityInfo != null) {
-          browserPackageName = resolveInfo.activityInfo.packageName;
-          Log.d(TAG, "Using browser in package " + browserPackageName);
-        }
-
-        // Needed for default Android browser / Chrome only apparently
-        if ("com.android.browser".equals(browserPackageName) || "com.android.chrome".equals(browserPackageName)) {
-          intent.setPackage(browserPackageName);
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-          intent.putExtra(Browser.EXTRA_APPLICATION_ID, browserPackageName);
-        }
-
-        try {
-        	Mediator.getInstance().getCaptureActivity().startActivity(intent);
-        } catch (ActivityNotFoundException ignored) {
-          Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
-        }
         break;
     }
   }

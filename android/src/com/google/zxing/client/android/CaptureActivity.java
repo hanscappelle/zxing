@@ -201,6 +201,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         // Handle these events so they don't launch the Camera app
         return true;
       // Use volume up/down to turn on light
+        // TODO indicate that this is an option somewhere!!
       case KeyEvent.KEYCODE_VOLUME_DOWN:
         Mediator.getInstance().getCameraManager().setTorch(false);
         return true;
