@@ -19,7 +19,6 @@ package com.google.zxing.client.android.result;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
-import com.google.zxing.client.android.LocaleManager;
 import com.google.zxing.client.android.PreferencesActivity;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
@@ -366,19 +365,19 @@ public abstract class ResultHandler {
   }
 
   final void getDirections(double latitude, double longitude) {
-    launchIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google." +
-        LocaleManager.getCountryTLD(activity) + "/maps?f=d&daddr=" + latitude + ',' + longitude)));
+    launchIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com" +
+        "/maps?f=d&daddr=" + latitude + ',' + longitude)));
   }
 
   // Uses the mobile-specific version of Product Search, which is formatted for small screens.
   final void openProductSearch(String upc) {
-    Uri uri = Uri.parse("http://www.google." + LocaleManager.getProductSearchCountryTLD(activity) +
+    Uri uri = Uri.parse("http://www.google.com" + 
         "/m/products?q=" + upc + "&source=zxing");
     launchIntent(new Intent(Intent.ACTION_VIEW, uri));
   }
 
   final void openBookSearch(String isbn) {
-    Uri uri = Uri.parse("http://books.google." + LocaleManager.getBookSearchCountryTLD(activity) +
+    Uri uri = Uri.parse("http://books.google.com" +
         "/books?vid=isbn" + isbn);
     launchIntent(new Intent(Intent.ACTION_VIEW, uri));
   }

@@ -16,7 +16,6 @@
 
 package com.google.zxing.client.android.result;
 
-import com.google.zxing.client.android.LocaleManager;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
@@ -50,9 +49,9 @@ public final class URIResultHandler extends ResultHandler {
 
   @Override
   public int getButtonCount() {
-    if (LocaleManager.isBookSearchUrl(((URIParsedResult) getResult()).getURI())) {
-      return buttons.length;
-    }
+    //if (LocaleManager.isBookSearchUrl(((URIParsedResult) getResult()).getURI())) {
+    //  return buttons.length;
+    //}
     return buttons.length - 1;
   }
 
