@@ -20,6 +20,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
+import com.google.zxing.ResultPointCallback;
 import com.google.zxing.client.android.camera.CameraManager;
 
 import android.app.Activity;
@@ -383,7 +384,15 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       // Creating the handler starts the preview, which can also throw a RuntimeException.
       if (handler == null) {
         handler = new CaptureActivityHandler(decodeFormats, decodeHints, characterSet, 
-                new ViewfinderResultPointCallback(viewfinderView));// no longer needed, cameraManager);
+                //new ViewfinderResultPointCallback(viewfinderView));// no longer needed, cameraManager);
+        		new ResultPointCallback() {
+
+        			  @Override
+        			  public void foundPossibleResultPoint(ResultPoint point) {
+        			    viewfinderView.addPossibleResultPoint(point);
+        			  }
+        		});
+
       }
       decodeOrStoreSavedBitmap(null, null);
     } catch (IOException ioe) {
