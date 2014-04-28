@@ -70,7 +70,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private CaptureActivityHandler handler;
   private Result savedResultToShow;
   private ViewfinderView viewfinderView;
-  private TextView statusView;
   private View resultView;
   private Result lastResult;
   private boolean hasSurface;
@@ -119,7 +118,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator
 
     resultView = findViewById(R.id.result_view);
-    statusView = (TextView) findViewById(R.id.status_view);
 
     handler = null;
     lastResult = null;
@@ -337,8 +335,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     CharSequence displayContents = rawResult.getText();
 
     //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-    statusView.setVisibility(View.GONE);
     viewfinderView.setVisibility(View.GONE);
     resultView.setVisibility(View.VISIBLE);
 
@@ -418,8 +414,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   private void resetStatusView() {
     resultView.setVisibility(View.GONE);
-    statusView.setText(R.string.msg_default_status);
-    statusView.setVisibility(View.VISIBLE);
     viewfinderView.setVisibility(View.VISIBLE);
     lastResult = null;
   }
