@@ -70,12 +70,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   private static final String TAG = CaptureActivity.class.getSimpleName();
 
-  private static final Collection<ResultMetadataType> DISPLAYABLE_METADATA_TYPES =
-      EnumSet.of(ResultMetadataType.ISSUE_NUMBER,
-                 ResultMetadataType.SUGGESTED_PRICE,
-                 ResultMetadataType.ERROR_CORRECTION_LEVEL,
-                 ResultMetadataType.POSSIBLE_COUNTRY);
-
   //private CameraManager cameraManager;
   private CaptureActivityHandler handler;
   private Result savedResultToShow;
@@ -369,26 +363,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView timeTextView = (TextView) findViewById(R.id.time_text_view);
     timeTextView.setText(formatter.format(new Date(rawResult.getTimestamp())));
 
-
-    TextView metaTextView = (TextView) findViewById(R.id.meta_text_view);
-    View metaTextViewLabel = findViewById(R.id.meta_text_view_label);
-    metaTextView.setVisibility(View.GONE);
-    metaTextViewLabel.setVisibility(View.GONE);
-    Map<ResultMetadataType,Object> metadata = rawResult.getResultMetadata();
-    if (metadata != null) {
-      StringBuilder metadataText = new StringBuilder(20);
-      for (Map.Entry<ResultMetadataType,Object> entry : metadata.entrySet()) {
-        if (DISPLAYABLE_METADATA_TYPES.contains(entry.getKey())) {
-          metadataText.append(entry.getValue()).append('\n');
-        }
-      }
-      if (metadataText.length() > 0) {
-        metadataText.setLength(metadataText.length() - 1);
-        metaTextView.setText(metadataText);
-        metaTextView.setVisibility(View.VISIBLE);
-        metaTextViewLabel.setVisibility(View.VISIBLE);
-      }
-    }
+    // Map<ResultMetadataType,Object> metadata = rawResult.getResultMetadata();
+    // here you could handle the metadata
 
     TextView contentsTextView = (TextView) findViewById(R.id.contents_text_view);
     contentsTextView.setText(displayContents);
