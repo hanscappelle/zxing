@@ -167,72 +167,6 @@ public final class Intents {
     }
   }
 
-  public static final class History {
-
-    public static final String ITEM_NUMBER = "ITEM_NUMBER";
-
-    private History() {
-    }
-  }
-
-  public static final class Encode {
-    /**
-     * Send this intent to encode a piece of data as a QR code and display it full screen, so
-     * that another person can scan the barcode from your screen.
-     */
-    public static final String ACTION = "com.google.zxing.client.android.ENCODE";
-
-    /**
-     * The data to encode. Use {@link android.content.Intent#putExtra(String, String)} or
-     * {@link android.content.Intent#putExtra(String, android.os.Bundle)}, 
-     * depending on the type and format specified. Non-QR Code formats should
-     * just use a String here. For QR Code, see Contents for details.
-     */
-    public static final String DATA = "ENCODE_DATA";
-
-    /**
-     * The type of data being supplied if the format is QR Code. Use
-     * {@link android.content.Intent#putExtra(String, String)} with one of {@link Contents.Type}.
-     */
-    public static final String TYPE = "ENCODE_TYPE";
-
-    /**
-     * The barcode format to be displayed. If this isn't specified or is blank,
-     * it defaults to QR Code. Use {@link android.content.Intent#putExtra(String, String)}, where
-     * format is one of {@link com.google.zxing.BarcodeFormat}.
-     */
-    public static final String FORMAT = "ENCODE_FORMAT";
-
-    /**
-     * Normally the contents of the barcode are displayed to the user in a TextView. Setting this
-     * boolean to false will hide that TextView, showing only the encode barcode.
-     */
-    public static final String SHOW_CONTENTS = "ENCODE_SHOW_CONTENTS";
-
-    private Encode() {
-    }
-  }
-
-  public static final class SearchBookContents {
-    /**
-     * Use Google Book Search to search the contents of the book provided.
-     */
-    public static final String ACTION = "com.google.zxing.client.android.SEARCH_BOOK_CONTENTS";
-
-    /**
-     * The book to search, identified by ISBN number.
-     */
-    public static final String ISBN = "ISBN";
-
-    /**
-     * An optional field which is the text to search for.
-     */
-    public static final String QUERY = "QUERY";
-
-    private SearchBookContents() {
-    }
-  }
-
   public static final class WifiConnect {
     /**
      * Internal intent used to trigger connection to a wi-fi network.
@@ -258,14 +192,4 @@ public final class Intents {
     }
   }
 
-  public static final class Share {
-    /**
-     * Give the user a choice of items to encode as a barcode, then render it as a QR Code and
-     * display onscreen for a friend to scan with their phone.
-     */
-    public static final String ACTION = "com.google.zxing.client.android.SHARE";
-
-    private Share() {
-    }
-  }
 }
