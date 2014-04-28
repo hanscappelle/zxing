@@ -332,10 +332,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         intent.setClassName(this, PreferencesActivity.class.getName());
         startActivity(intent);
         break;
-      case R.id.menu_help:
-        intent.setClassName(this, HelpActivity.class.getName());
-        startActivity(intent);
-        break;
       default:
         return super.onOptionsItemSelected(item);
     }
