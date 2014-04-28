@@ -98,8 +98,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private Map<DecodeHintType,?> decodeHints;
   private String characterSet;
   private InactivityTimer inactivityTimer;
-  private BeepManager beepManager;
-  private AmbientLightManager ambientLightManager;
 
   Handler getHandler(){
 	  return this.handler;
@@ -120,8 +118,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     hasSurface = false;
     inactivityTimer = new InactivityTimer(this);
-    beepManager = new BeepManager(this);
-    ambientLightManager = new AmbientLightManager(this);
 
     PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
   }
@@ -168,10 +164,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       surfaceHolder.addCallback(this);
     }
 
-    beepManager.updatePrefs();
-    //ambientLightManager.start(cameraManager);
-    ambientLightManager.start();
-
     inactivityTimer.onResume();
 
     source = IntentSource.NONE;
@@ -198,7 +190,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       handler = null;
     }
     inactivityTimer.onPause();
-    ambientLightManager.stop();
     Mediator.getInstance().getCameraManager().closeDriver();
     if (!hasSurface) {
       SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
@@ -317,7 +308,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     boolean fromLiveScan = barcode != null;
     if (fromLiveScan) {
       // Then not from history, so beep/vibrate and we have an image to draw on
-      beepManager.playBeepSoundAndVibrate();
       drawResultPoints(barcode, scaleFactor, rawResult);
     }
 
