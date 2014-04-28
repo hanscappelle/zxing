@@ -23,6 +23,7 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.Display;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
 
@@ -59,10 +60,10 @@ public final class CameraManager {
    * clear the handler so it will only receive one message.
    */
   private final PreviewCallback previewCallback;
-
-  public CameraManager(Context context) {
+  
+  public CameraManager(Context context, Display display) {
     this.context = context;
-    this.configManager = new CameraConfigurationManager(context);
+    this.configManager = new CameraConfigurationManager(context, display);
     previewCallback = new PreviewCallback(configManager);
   }
 

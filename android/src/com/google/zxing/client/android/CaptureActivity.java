@@ -114,7 +114,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     // off screen.
     //cameraManager = ;
     // update mediator with this object
-    Mediator.getInstance().setCameraManager(new CameraManager(getApplication()));
+    Mediator.getInstance().setCameraManager(new CameraManager(getApplication(), getWindowManager().getDefaultDisplay()));
 
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator
@@ -144,17 +144,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   }
 
-  private int getCurrentOrientation() {
-    int rotation = getWindowManager().getDefaultDisplay().getRotation();
-    switch (rotation) {
-      case Surface.ROTATION_0:
-      case Surface.ROTATION_90:
-        return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-      default:
-        return ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-    }
-  }
-  
   @Override
   protected void onPause() {
     if (handler != null) {

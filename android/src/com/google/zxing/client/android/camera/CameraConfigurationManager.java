@@ -23,6 +23,7 @@ import android.hardware.Camera;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Display;
+import android.view.Surface;
 import android.view.WindowManager;
 
 import com.google.zxing.client.android.PreferencesActivity;
@@ -55,9 +56,12 @@ final class CameraConfigurationManager {
   private final Context context;
   private Point screenResolution;
   private Point cameraResolution;
+  
+  private Display mDisplay;
 
-  CameraConfigurationManager(Context context) {
+  CameraConfigurationManager(Context context, Display display) {
     this.context = context;
+    mDisplay = display;
   }
 
   /**
@@ -147,10 +151,35 @@ final class CameraConfigurationManager {
       }
 
     }
+    
+    // set rotation
+    if( mDisplay != null ){
+    	int rotation = mDisplay.getRotation();
+    	int angle = 0;
+    	switch (rotation) {
+	        case Surface.ROTATION_0: // This is display orientation
+	            angle = 90; // This is camera orientation
+	            break;
+	        case Surface.ROTATION_90:
+	            angle = 0;
+	            break;
+	        case Surface.ROTATION_180:
+	            angle = 270;
+	            break;
+	        case Surface.ROTATION_270:
+	            angle = 180;
+	            break;
+	        default:
+	            angle = 90;
+	            break;
+    	}
+    	//parameters.setRotation(angle);
+    	camera.setDisplayOrientation(angle);
+    }
 
     parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
     camera.setParameters(parameters);
-
+    
     Camera.Parameters afterParameters = camera.getParameters();
     Camera.Size afterSize = afterParameters.getPreviewSize();
     if (afterSize!= null && (cameraResolution.x != afterSize.width || cameraResolution.y != afterSize.height)) {
