@@ -117,6 +117,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     Mediator.getInstance().getCameraManager().setManualFramingRect(
     surfaceView.getHolder().getSurfaceFrame().width(), surfaceView.getHolder().getSurfaceFrame().height());
 
+    // removed viewfinderView completely
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator
 
@@ -366,7 +367,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         			  @Override
         			  public void foundPossibleResultPoint(ResultPoint point) {
-        			    viewfinderView.addPossibleResultPoint(point);
+        			    //viewfinderView.addPossibleResultPoint(point);
+        				  // ignore these now
         			  }
         		});
 

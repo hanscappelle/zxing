@@ -51,6 +51,7 @@
                 android:visibility="gone"
                 android:baselineAligned="false">
 
+      <!-- TODO reduce nesting -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
