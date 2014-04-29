@@ -224,7 +224,7 @@ final class CameraConfigurationManager {
   }
 
   private void initializeTorch(Camera.Parameters parameters, SharedPreferences prefs, boolean safeMode) {
-    boolean currentSetting = FrontLightMode.readPref(prefs) == FrontLightMode.ON;
+    boolean currentSetting = prefs.getBoolean(PreferencesActivity.KEY_FRONT_LIGHT_MODE, false);
     doSetTorch(parameters, currentSetting, safeMode);
   }
 
