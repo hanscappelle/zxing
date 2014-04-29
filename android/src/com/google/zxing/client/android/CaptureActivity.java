@@ -26,8 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -114,8 +112,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     //cameraManager = ;
     // update mediator with this object
     Mediator.getInstance().setCameraManager(new CameraManager(getApplication()));
-    Mediator.getInstance().getCameraManager().setManualFramingRect(
-    surfaceView.getHolder().getSurfaceFrame().width(), surfaceView.getHolder().getSurfaceFrame().height());
+    //Mediator.getInstance().getCameraManager().setManualFramingRect(
+    //surfaceView.getHolder().getSurfaceFrame().width(), surfaceView.getHolder().getSurfaceFrame().height());
 
     // removed viewfinderView completely
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
@@ -262,55 +260,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     inactivityTimer.onActivity();
     lastResult = rawResult;
 
-    boolean fromLiveScan = barcode != null;
-    if (fromLiveScan) {
-      // Then not from history, so beep/vibrate and we have an image to draw on
-      drawResultPoints(barcode, scaleFactor, rawResult);
-    }
+    // no more points drawing, just decode
     handleDecodeInternally(rawResult, barcode);
-  }
-
-  /**
-   * Superimpose a line for 1D or dots for 2D to highlight the key features of the barcode.
-   *
-   * @param barcode   A bitmap of the captured image.
-   * @param scaleFactor amount by which thumbnail was scaled
-   * @param rawResult The decoded results which contains the points to draw.
-   */
-  private void drawResultPoints(Bitmap barcode, float scaleFactor, Result rawResult) {
-    ResultPoint[] points = rawResult.getResultPoints();
-    if (points != null && points.length > 0) {
-      Canvas canvas = new Canvas(barcode);
-      Paint paint = new Paint();
-      paint.setColor(getResources().getColor(R.color.result_points));
-      if (points.length == 2) {
-        paint.setStrokeWidth(4.0f);
-        drawLine(canvas, paint, points[0], points[1], scaleFactor);
-      } else if (points.length == 4 &&
-                 (rawResult.getBarcodeFormat() == BarcodeFormat.UPC_A ||
-                  rawResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
-        // Hacky special case -- draw two lines, for the barcode and metadata
-        drawLine(canvas, paint, points[0], points[1], scaleFactor);
-        drawLine(canvas, paint, points[2], points[3], scaleFactor);
-      } else {
-        paint.setStrokeWidth(10.0f);
-        for (ResultPoint point : points) {
-          if (point != null) {
-            canvas.drawPoint(scaleFactor * point.getX(), scaleFactor * point.getY(), paint);
-          }
-        }
-      }
-    }
-  }
-
-  private static void drawLine(Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, float scaleFactor) {
-    if (a != null && b != null) {
-      canvas.drawLine(scaleFactor * a.getX(), 
-                      scaleFactor * a.getY(), 
-                      scaleFactor * b.getX(), 
-                      scaleFactor * b.getY(), 
-                      paint);
-    }
   }
 
   // Put up our own UI for how to handle the decoded contents.
