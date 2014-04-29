@@ -18,6 +18,7 @@ package com.google.zxing.client.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 
 /**
  * The main settings activity.
@@ -26,13 +27,6 @@ import android.os.Bundle;
  * @author Sean Owen
  */
 public final class PreferencesActivity extends Activity {
-
-  public static final String KEY_DECODE_1D_PRODUCT = "preferences_decode_1D_product";
-  public static final String KEY_DECODE_1D_INDUSTRIAL = "preferences_decode_1D_industrial";
-  public static final String KEY_DECODE_QR = "preferences_decode_QR";
-  public static final String KEY_DECODE_DATA_MATRIX = "preferences_decode_Data_Matrix";
-  public static final String KEY_DECODE_AZTEC = "preferences_decode_Aztec";
-  public static final String KEY_DECODE_PDF417 = "preferences_decode_PDF417";
 
   public static final String KEY_FRONT_LIGHT_MODE = "preferences_front_light_mode";
   public static final String KEY_AUTO_FOCUS = "preferences_auto_focus";
@@ -47,7 +41,15 @@ public final class PreferencesActivity extends Activity {
   @Override
   protected void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-    getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFragment()).commit();
+    getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment(){
+    	@Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Load the preferences from an XML resource
+            addPreferencesFromResource(R.xml.preferences);
+        }
+    }).commit();
   }
 
 }
