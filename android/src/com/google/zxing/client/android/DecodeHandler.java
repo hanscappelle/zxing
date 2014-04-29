@@ -74,7 +74,7 @@ final class DecodeHandler extends Handler {
   private void decode(byte[] data, int width, int height) {
     long start = System.currentTimeMillis();
 
-    // TODO perform rotation
+    // perform rotation
     if( Mediator.getInstance().getCameraManager().isRotated() ) {
 	    byte[] rotatedData = new byte[data.length];
 	    for (int y = 0; y < height; y++) {

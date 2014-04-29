@@ -23,7 +23,6 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.Display;
 
 import com.google.zxing.PlanarYUVLuminanceSource;
 
