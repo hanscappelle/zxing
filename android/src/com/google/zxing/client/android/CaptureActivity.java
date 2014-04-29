@@ -281,8 +281,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       barcodeImageView.setImageBitmap(barcode);
     }
 
-    TextView formatTextView = (TextView) findViewById(R.id.format_text_view);
-    formatTextView.setText(rawResult.getBarcodeFormat().toString());
+    // this is how you could get the format
+    //formatTextView.setText(rawResult.getBarcodeFormat().toString());
 
     //TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
     //typeTextView.setText(resultHandler.getType().toString());
