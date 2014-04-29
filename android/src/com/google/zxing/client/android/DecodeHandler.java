@@ -74,18 +74,18 @@ final class DecodeHandler extends Handler {
   private void decode(byte[] data, int width, int height) {
     long start = System.currentTimeMillis();
 
-    /*
     // TODO perform rotation
-    byte[] rotatedData = new byte[data.length];
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++)
-            rotatedData[x * height + height - y - 1] = data[x + y * width];
+    if( Mediator.getInstance().getCameraManager().isRotated() ) {
+	    byte[] rotatedData = new byte[data.length];
+	    for (int y = 0; y < height; y++) {
+	        for (int x = 0; x < width; x++)
+	            rotatedData[x * height + height - y - 1] = data[x + y * width];
+	    }
+	    int tmp = width;
+	    width = height;
+	    height = tmp;
+	    data = rotatedData;
     }
-    int tmp = width;
-    width = height;
-    height = tmp;
-    data = rotatedData;
-    */
     
     Result rawResult = null;
     PlanarYUVLuminanceSource source = Mediator.getInstance().getCameraManager().buildLuminanceSource(data, width, height);

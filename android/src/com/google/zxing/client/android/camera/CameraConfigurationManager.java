@@ -22,6 +22,7 @@ import android.graphics.Point;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
 
@@ -65,16 +66,16 @@ final class CameraConfigurationManager {
    */
   void initFromCameraParameters(Camera camera) {
     Camera.Parameters parameters = camera.getParameters();
-    //WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-    //Display display = manager.getDefaultDisplay();
-    //Point theScreenResolution = new Point();
-    //display.getSize(theScreenResolution);
-    //screenResolution = theScreenResolution;
-    // FIXME use camera resolution instead here
+    WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+    Display display = manager.getDefaultDisplay();
+    Point theScreenResolution = new Point();
+    display.getSize(theScreenResolution);
+    viewResolution = theScreenResolution;
     //Log.i(TAG, "Screen resolution: " + screenResolution);
     
-    //cameraResolution = findBestPreviewSizeValue(parameters, null);
-    //Log.i(TAG, "Camera resolution: " + cameraResolution);
+    // FIXME use view resolution instead here
+    cameraResolution = findBestPreviewSizeValue(parameters, viewResolution);
+    Log.i(TAG, "Camera resolution: " + cameraResolution);
   }
 
   void setDesiredCameraParameters(Camera camera, boolean safeMode) {
@@ -157,18 +158,20 @@ final class CameraConfigurationManager {
     	switch (rotation) {
 	        case Surface.ROTATION_0: // This is display orientation
 	            angle = 90; // This is camera orientation
+	            mRotated = true;
 	            break;
 	        case Surface.ROTATION_90:
 	            angle = 0;
 	            break;
 	        case Surface.ROTATION_180:
-	            angle = 270;
+	            angle = 270; // should we support these
 	            break;
 	        case Surface.ROTATION_270:
-	            angle = 180;
+	            angle = 180; // should we support these
 	            break;
 	        default:
 	            angle = 90;
+	            mRotated = true;
 	            break;
     	}
     	//parameters.setRotation(angle);
@@ -185,6 +188,12 @@ final class CameraConfigurationManager {
       cameraResolution.x = afterSize.width;
       cameraResolution.y = afterSize.height;
     }
+  }
+  
+  private boolean mRotated = false;
+  
+  public boolean isRotated(){
+	  return mRotated;
   }
 
   Point getCameraResolution() {

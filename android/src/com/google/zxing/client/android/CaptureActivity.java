@@ -105,6 +105,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   protected void onResume() {
     super.onResume();
 
+    SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+
     // CameraManager must be initialized here, not in onCreate(). This is necessary because we don't
     // want to open the camera driver and measure the screen size if we're going to show the help on
     // first launch. That led to bugs where the scanning rectangle was the wrong size and partially
@@ -112,6 +114,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     //cameraManager = ;
     // update mediator with this object
     Mediator.getInstance().setCameraManager(new CameraManager(getApplication()));
+    Mediator.getInstance().getCameraManager().setManualFramingRect(
+    surfaceView.getHolder().getSurfaceFrame().width(), surfaceView.getHolder().getSurfaceFrame().height());
 
     viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
     //viewfinderView.setCameraManager(cameraManager); // this shouldn't be needed anymore now that we have that mediator
@@ -123,7 +127,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     resetStatusView();
 
-    SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
     SurfaceHolder surfaceHolder = surfaceView.getHolder();
     if (hasSurface) {
       // The activity was paused but not stopped, so the surface still exists. Therefore
