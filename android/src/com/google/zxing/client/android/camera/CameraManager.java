@@ -227,6 +227,7 @@ public final class CameraManager {
   }
   
   private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
+	/*
     int dim = 5 * resolution / 8; // Target 5/8 of each dimension
     if (dim < hardMin) {
       return hardMin;
@@ -234,7 +235,13 @@ public final class CameraManager {
     if (dim > hardMax) {
       return hardMax;
     }
+    
     return dim;
+    */
+	// complete view taken as scanning frame from now on
+	// FIXME as long as we keep calculating on the screen size instead of the preview 
+	// containing view we will get dimensions that are too large. Doesn't stop scanning 
+	return resolution;
   }
 
   /**
